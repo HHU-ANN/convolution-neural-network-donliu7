@@ -81,12 +81,12 @@ class BottleNeck(nn.Module):
         return self.relu(Y + identity)
 
 
-class ResNet(nn.Module):
+class NeuralNetwork(nn.Module):
     """搭建ResNet-layer通用框架"""
 
     # num_classes是训练集的分类个数，include_top是在ResNet的基础上搭建更加复杂的网络时用到，此处用不到
     def __init__(self, residual, num_residuals, num_classes=1000, include_top=True):
-        super(ResNet, self).__init__()
+        super(NeuralNetwork, self).__init__()
 
         self.out_channel = 64  # 输出通道数(即卷积核个数)，会生成与设定的输出通道数相同的卷积核个数
         self.include_top = include_top
@@ -148,10 +148,6 @@ class ResNet(nn.Module):
         return Y
 
 
-# 构建ResNet-50模型
-def resnet50(num_classes=1000, include_top=True):
-    return ResNet(BottleNeck, [3, 4, 6, 3], num_classes=num_classes, include_top=include_top)
-
 
 def read_data():
     # 这里可自行修改数据预处理，batch大小也可自行调整
@@ -163,7 +159,7 @@ def read_data():
     return dataset_train, dataset_val, data_loader_train, data_loader_val
 
 def main():
-    model = resnet50().to(device) # 若有参数则传入参数
+    model = NeuralNetwork(BottleNeck, [3, 4, 6, 3]) # 若有参数则传入参数
     current_dir = os.path.dirname(os.path.abspath(__file__))
     parent_dir = os.path.dirname(current_dir)
     model.load_state_dict(torch.load(parent_dir + '/pth/model.pth',  map_location='cpu'))
