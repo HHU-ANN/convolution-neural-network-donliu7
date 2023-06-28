@@ -148,11 +148,6 @@ class ResNet(nn.Module):
         return Y
 
 
-# # 构建ResNet-34模型
-# def resnet34(num_classes=1000, include_top=True):
-#     return ResNet(BasicBlock, [3, 4, 6, 3], num_classes=num_classes, include_top=include_top)
-# #
-
 # 构建ResNet-50模型
 def resnet50(num_classes=1000, include_top=True):
     return ResNet(BottleNeck, [3, 4, 6, 3], num_classes=num_classes, include_top=include_top)
